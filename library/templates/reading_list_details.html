@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}
+<style>
+    #mainNav {
+        background-color: #474c52 !important;
+    }
+    .content-below-nav {
+        padding-top: 70px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-12 content-below-nav">
+            <h1 class="mt-4">{{ object.name }}</h1>
+            <ul class="list-unstyled">
+                {% for article in object.articles.all %}
+                    <li class="media mb-3">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">{{ article.title }}</h5>
+                            <a href="{% url 'article_details' article.pk %}">View</a> - 
+                            <small><a href="{% url 'remove_from_reading_list' object.pk article.pk %}">Remove</a></small>
+                        </div>
+                    </li>
+                {% empty %}
+                    <p>No articles in this reading list.</p>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'edit_reading_list' object.pk %}" class="btn btn-secondary rounded-pill">Edit reading list</a>
+            <a href="{% url 'confirm_reading_list_delete' object.pk %}" class="btn btn-danger rounded-pill">Delete reading list</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

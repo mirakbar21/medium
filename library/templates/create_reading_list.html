@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}
+<style>
+    #mainNav {
+        background-color: #474c52 !important;
+    }
+    .content-below-nav {
+        padding-top: 70px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-12 content-below-nav">
+            <h1 class="mt-4">Create a reading list</h1>
+            <form method="post" class="mt-3">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary rounded-pill">Create</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

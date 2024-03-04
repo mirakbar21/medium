@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a comment</title>
+</head>
+<body>
+<h2><a href="{% url 'article_details' article.pk %}">{{article.title}}</a> | Comments</h2>
+    {% for comment in article.comments.all %}
+        <small>{{comment.author}}</small><br>
+        <big>{{comment.text}}</big><br>
+    <small><time>{{comment.created_date}}</time></small>
+    <hr>
+    {% endfor %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Comment</button>
+    </form>
+
+</body>
+</html>

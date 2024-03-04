@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns="http://www.w3.org/1999/html">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Medium</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--{% load static %}-->
+<!--<style>-->
+<!--    .profile-photo {-->
+<!--        width: 40px; /* Adjust the size as needed */-->
+<!--        height: 40px;-->
+<!--        border-radius: 50%; /* Makes the image round */-->
+<!--        object-fit: cover; /* Ensures the image covers the area without being stretched */-->
+<!--    }-->
+<!--</style>-->
+<!--&lt;!&ndash;    HERE&ndash;&gt;-->
+<!--{% if request.user.photo and request.user.photo.url %}-->
+<!--    <img src="{{ request.user.photo.url }}" alt="Profile Photo" class="profile-photo">-->
+<!--{% endif %}-->
+<!--    <a href="{% url 'user_profile' %}">{{request.user.username}}</a><br><br>-->
+
+<!--    {% if following_articles %}-->
+<!--    <h1>Following</h1>-->
+<!--    <ul>-->
+<!--    {% for article in following_articles %}-->
+<!--        <li><a href="{% url 'article_details' article.pk %}">{{ article.title }}</a> - {{ article.minutes_to_read }} min{{article.minutes_to_read|pluralize}}</li><br>-->
+<!--        {{ article.subtitle }}-->
+<!--    {% empty %}-->
+<!--        <li>No articles from following.</li>-->
+<!--        <hr>-->
+<!--    {% endfor %}-->
+<!--    </ul>-->
+<!--    {% endif %}-->
+
+<!--     <h1>For you</h1>-->
+<!--        <ul>-->
+<!--            {% for article in other_articles %}-->
+<!--                <li><a href="{% url 'article_details' article.pk %}">{{ article.title }}</a>-->
+<!--        - {{ article.minutes_to_read }} min{{article.minutes_to_read|pluralize}}</li><br>-->
+<!--        {{ article.subtitle }}-->
+<!--            <hr>-->
+<!--            {% endfor %}-->
+<!--        </ul>-->
+<!--    <a href="{% url 'create_article'%}">Write</a><br>-->
+<!--    <a href="{% url 'logout'%}">Logout</a><br>-->
+<!--    <a href="{% url 'reading_list'%}">Library</a><br>-->
+
+<!--</body>-->
+<!--</html>-->
+
+{% block content %}
+
+<header class="masthead" style="background-image: url('{% static 'assets/img/home-bg.jpg' %}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Articles</h1>
+                            <span class="subheading">Medium</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Post preview-->
+              <h2><u>Following</u></h2>
+            {% for article in following_articles %}
+            <div class="post-preview">
+                <a href="{% url 'article_details' article.pk %}">
+                    <h2 class="post-title">{{ article.title }}</h2>
+                    <h3 class="post-subtitle">{{ article.subtitle }}</h3>
+                </a>
+                <p class="post-meta">
+                    <strong>{{ article.category }}</strong>   |   {{ article.minutes_to_read }} min{{article.minutes_to_read|pluralize}}
+                </p>
+                <p class="post-meta">
+                    <img src="{% if article.author.photo %}{{ article.author.photo.url }}{% else %}{% static 'assets/img/user_1144760.png' %}{% endif %}" alt="{{ article.author.username }}" class="profile-photo">
+                        <strong>{{ article.author.username }}</strong>
+                    on {{ article.publication_date }}
+                </p>
+            </div>
+            <hr class="my-4" />
+            {% empty %}
+            <p>No articles from following.</p>
+            {% endfor %}
+
+            <!-- Post preview-->
+            <h2><u>For you</u></h2>
+            {% for article in other_articles %}
+            <div class="post-preview">
+                <a href="{% url 'article_details' article.pk %}">
+                    <h2 class="post-title">{{ article.title }}</h2>
+                    <h3 class="post-subtitle">{{ article.subtitle }}</h3>
+                </a>
+                <p class="post-meta">
+                    <strong>{{ article.category }}</strong>   |   {{ article.minutes_to_read }} min{{article.minutes_to_read|pluralize}}
+                </p>
+                <p class="post-meta">
+                    <img src="{% if article.author.photo %}{{ article.author.photo.url }}{% else %}{% static 'assets/img/user_1144760.png' %}{% endif %}" alt="{{ article.author.username }}" class="profile-photo">
+                        <strong>{{ article.author.username }}</strong>
+                    on {{ article.publication_date }}
+                </p>
+            </div>
+            <hr class="my-4" />
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

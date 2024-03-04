@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}
+<style>
+    #mainNav {
+        background-color: #474c52 !important;
+    }
+    .content-below-nav {
+        padding-top: 70px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Edit Article</h1>
+            <form method="post" enctype="multipart/form-data" class="form-group">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary rounded-pill">Save</button>
+                <a href="{% url 'article_details' object.id %}" class="btn btn-secondary rounded-pill">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

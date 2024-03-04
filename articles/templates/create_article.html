@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New article - Medium</title>
+</head>
+<body>
+<a href="{% url 'user_profile' %}">{{request.user.username}}</a>
+<a href="{% url 'articles'%}">Articles</a>
+<h1>Write your article</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Publish</button>
+</form>
+</body>
+</html>

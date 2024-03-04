@@ -1,0 +1,36 @@
+{% load static %}
+
+
+{% block content %}
+<head>
+        {% block extrahead %}
+        {% endblock %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Medium</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    </head>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Register</h2>
+            <form method="post" enctype="multipart/form-data" class="border p-4 rounded">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="text-center">
+                    <input type="submit" value="Register" class="btn btn-success rounded-pill">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

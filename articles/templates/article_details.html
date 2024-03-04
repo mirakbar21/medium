@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a href="{% url 'user_profile' %}">{{request.user.username}}</a>-->
+<!--<a href="{% url 'articles'%}">Articles</a>-->
+<!--<h1>{{article.title}}</h1>-->
+<!--<small>{{article.author}} – {{article.publication_date}} - {{article.category}}</small>-->
+<!--{% if user.is_authenticated %}-->
+<!--    {% if request.user != article.author %}-->
+<!--        {% if article.author in request.user.following.all %}-->
+<!--            <form action="{% url 'unsubscribe' article.author.id %}" method="post">-->
+<!--                {% csrf_token %}-->
+<!--                <input type="submit" value="Unsubscribe">-->
+<!--            </form>-->
+<!--        {% else %}-->
+
+<!--            <form action="{% url 'subscribe' article.author.id %}" method="post">-->
+<!--                {% csrf_token %}-->
+<!--                <input type="submit" value="Subscribe">-->
+<!--            </form>-->
+<!--        {% endif %}-->
+<!--    {% endif %}-->
+<!--    {% endif %}-->
+
+<!--<h3>{{article.subtitle}}</h3>-->
+<!--<p>{{article.applauds}} applaud{{article.applauds|pluralize}}</p>-->
+<!--<form action="{% url 'article_applaud' article.id %}" method="post" >-->
+<!--    {% csrf_token %}-->
+<!--    <button type="submit" value="Applaud">Applaud</button>-->
+<!--</form><br>-->
+<!--<a href="{% url 'add_to_saved' article.id %}">Add to Reading List</a><br>-->
+<!--<a href="{% url 'add_comment' article.id %}">Comments</a><hr>-->
+<!--{% if article.image %}-->
+<!--    <img src="{{ article.image.url }}" alt=""><br>-->
+<!--{% endif %}-->
+<!--<p>{{article.content}}</p>-->
+<!--{% if request.user.is_authenticated and request.user == article.author %} <hr>-->
+<!--    <a href="{% url 'edit_article' article.id %}">Edit article</a>-->
+<!--    <a href="{% url 'confirm_delete' article.id %}">Delete article</a>-->
+<!--{% endif %}-->
+
+<!--</body>-->
+<!--</html>-->
+{% block content %}
+
+{% if article.image %}
+    <header class="masthead" style="background-image: url('{{ article.image.url }}')">
+{% else %}
+    <header class="masthead" style="background-image: url('{% static 'path/to/default/image.jpg' %}')">
+{% endif %}
+        <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>{{article.title}}</h1>
+                            <span class="subheading">{{article.subtitle}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+    <article class="mb-4">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <h1 class="post-title">{{ article.title }}</h1>
+                    <p class="post-meta">
+                        <img src="{% if article.author.photo %}{{ article.author.photo.url }}{% else %}{% static 'assets/img/user_1144760.png' %}{% endif %}" alt="{{ article.author.username }}" class="profile-photo">
+                        <u>{{ article.author }}</u>
+                        on {{ article.publication_date }} - {{ article.category }}
+                    </p>
+                    <h3 class="post-subtitle">{{ article.subtitle }}</h3>
+                <div class="d-flex justify-content-start mb-4">
+                    <!-- Applaud Button -->
+                    <form action="{% url 'article_applaud' article.id %}" method="post" class="me-2">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-sm rounded-pill">Applaud</button>
+                    </form>
+
+                    <!-- Add to Reading List -->
+                    <a href="{% url 'add_to_saved' article.id %}" class="btn btn-info btn-sm rounded-pill me-2">Add to Reading List</a>
+
+                    <!-- Subscribe / Unsubscribe -->
+                    {% if request.user != article.author %}
+                        {% if article.author in request.user.following.all %}
+                            <form action="{% url 'unsubscribe' article.author.id %}" method="post" class="me-2">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm rounded-pill">Unsubscribe</button>
+                            </form>
+                        {% else %}
+                            <form action="{% url 'subscribe' article.author.id %}" method="post" class="me-2">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success btn-sm rounded-pill">Subscribe</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                    <p>{{ article.content|linebreaks }}</p>
+
+                    <a href="{% url 'add_comment' article.id %}" class="btn btn-secondary btn-sm rounded-pill">Comments</a>
+
+                    {% if request.user.is_authenticated and request.user == article.author %}
+            <div class="d-flex justify-content-start my-4">
+                <a href="{% url 'edit_article' article.id %}" class="btn btn-warning btn-sm rounded-pill me-2">Edit Article</a>
+                <a href="{% url 'confirm_delete' article.id %}" class="btn btn-danger btn-sm rounded-pill">Delete Article</a>
+            </div>
+        {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </article>
+{% endblock %}

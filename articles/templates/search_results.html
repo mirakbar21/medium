@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}
+<style>
+    #mainNav {
+        background-color: #474c52 !important;
+    }
+    .content-below-nav {
+        padding-top: 70px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container px-4 px-lg-5 content-below-nav">
+    <h2 class="mt-4">Articles for "{{ query }}"</h2>
+    <ul class="list">
+        {% for article in articles %}
+        <li class="mb-4">
+            <a class="text-decoration-none" href="{% url 'article_details' article.pk %}">
+                <h3 class="h4">{{ article.title }}</h3>
+            </a>
+        </li>
+        {% empty %}
+        <p>No articles found.</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a href="{% url 'articles' %}">Articles</a>-->
+<!--<h2>Articles for "{{ query }}"</h2>-->
+
+<!--<ul>-->
+<!--    {% for article in articles %}-->
+<!--    <li><a href="{% url 'article_details' article.pk %}">{{ article.title }}</a></li>-->
+<!--{% empty %}-->
+<!--    <p>No articles found.</p>-->
+<!--{% endfor %}-->
+<!--</ul>-->
+
+<!--</body>-->
+<!--</html>-->
