@@ -1,17 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>New article - Medium</title>
-</head>
-<body>
-<a href="{% url 'user_profile' %}">{{request.user.username}}</a>
-<a href="{% url 'articles'%}">Articles</a>
-<h1>Write your article</h1>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button>Publish</button>
-</form>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block extrahead %}
+<style>
+    #mainNav {
+        background-color: #474c52 !important;
+    }
+    .content-below-nav {
+        padding-top: 70px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4 content-below-nav">
+    <h1>Write your article</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary">Publish</button>
+    </form>
+</div>
+{% endblock %}

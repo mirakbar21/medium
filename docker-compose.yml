@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=myprojectdb
+      - POSTGRES_USER=mirakbar21
+      - POSTGRES_PASSWORD=mirakbar21
+    ports:
+        - "5432:5432"
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./media:/usr/src/app/media
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      POSTGRES_DB: myprojectdb
+      POSTGRES_USER: mirakbar21
+      POSTGRES_PASSWORD: mirakbar21
+volumes:
+  postgres_data:
